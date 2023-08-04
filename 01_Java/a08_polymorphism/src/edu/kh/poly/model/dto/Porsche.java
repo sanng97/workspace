@@ -19,6 +19,10 @@ public class Porsche extends Car {
 	public String toString() {
 		return super.toString() + "Porsche [openTheDoor=" + openTheDoor + "]";
 	}
+	public char[] isOpenTheDoor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

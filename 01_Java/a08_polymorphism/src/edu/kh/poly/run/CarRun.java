@@ -72,12 +72,22 @@ public static void main(String[] args) {
 				carArr[i].getWheel(),
 				carArr[i].getSeat(),
 				carArr[i].getFuel());
+		
 	}
 	
-	
-	
-	
-	
+	// 다운 캐스팅
+	// 부모 참조 변수 = 자식 객체 형태에서 부모 참조 변수를 자식
+	//                  타입으로 강제 형변환해서 다시 자식 객체를
+	//                  온전히 참조할 수 있게 만드는것
+
+System.out.println("다운 캐스팅 확인");	
+
+System.out.println(((Porsche)carArr[1]).isOpenTheDoor());
+
+System.out.println((Spark)carArr[2].getDiscountRate());
+
+
+// git 연습 중	
 	
 	
 }
