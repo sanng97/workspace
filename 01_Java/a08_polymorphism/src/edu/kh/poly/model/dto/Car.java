@@ -53,10 +53,12 @@ public class Car extends Object {
 		return "Car [wheel=" + wheel + ", seat=" + seat + ", fuel=" + fuel + "]";
 	}
 
-	public Spark getDiscountRate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void bindingTest() {
+    	
+    	System.out.println("CAR 자료형 입니다.");
+    }
+
+    	
 
 	
 

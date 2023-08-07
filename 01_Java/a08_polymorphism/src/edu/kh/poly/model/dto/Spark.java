@@ -21,9 +21,6 @@ public class Spark extends Car {
 	}
 
 
-	public double getDiscountRate() {
-		return discountRate;
-	}
 
 
 	public void setDiscountRate(double discountRate) {
@@ -36,7 +33,18 @@ public class Spark extends Car {
 		return "Spark [discountRate=" + discountRate + "]";
 	}
 	
-	
+    public void bindingTest() {
+    	
+    	System.out.println("spark 자료형 입니다.");
+    }
+
+
+	public char[] getDiscountRate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    	
 	
 	
 	

@@ -24,7 +24,11 @@ public class Porsche extends Car {
 		return null;
 	}
 	
-	
+	   @Override
+	   public void bindingTest() {
+		   
+		   System.out.println("porsche 자료형입니다.");
+	   }
 	
 	
 	
