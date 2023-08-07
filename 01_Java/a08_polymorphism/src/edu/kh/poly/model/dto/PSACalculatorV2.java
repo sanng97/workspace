@@ -42,8 +42,10 @@ public class PSACalculatorV2 implements Calculator {
 
 	@Override
 	public int pow(int a, int x) {
+		// X가 무조건 양수인 경우
+							// 재귀호출
+		return x == 1 ? a : a * pow(a,x-1) ;
 		
-		return  0;
 	}
 
 	
@@ -60,4 +62,5 @@ public class PSACalculatorV2 implements Calculator {
 	
 	
 	
+
 
