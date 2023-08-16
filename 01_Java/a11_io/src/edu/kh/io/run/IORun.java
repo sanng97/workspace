@@ -7,7 +7,7 @@ public class IORun {
 
 		IOService service = new IOService();
 
-		service. 	CharInput();
+		service.objectInput();
 
 	}
 }
