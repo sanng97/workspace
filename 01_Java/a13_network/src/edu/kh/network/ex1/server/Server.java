@@ -1,6 +1,7 @@
-package edu.kh.newwork.ex1.server;
+package edu.kh.network.ex1.server;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -18,7 +19,7 @@ import javax.swing.text.SimpleAttributeSet;
 
 // Socket : 프로세스의 양 끝 단 - > 서버 클라이언트를  연결하는 통로/ 연결고리
 
-//                              -> Input/Output Stream을 이용해 서버 - 클라이언트가 데이터 교환 가능
+//                              -> Input/OutputStream을 이용해 서버 - 클라이언트가 데이터 교환 가능
 
 // TCP: 서버 - 클라이언트간의 1:1 소켓 통신
 //      -> 데이터 신뢰성을 보장 (데이터 오류시 재전송
@@ -35,17 +36,21 @@ public class Server {
 	
 	// 2. 서버용 소켓 객체 생성
 	// 		serverSocket : 지정된 포트 번호로 클라이언트 연결이 되는것을 기다리는 소켓 객체
-	ServerSocket serverSocket = null;
-	Socket clientSocket = null;
+	// 클라이언트 연결이 되는 것을 기다리는 소켓 객체
+	ServerSocket serverSocket = null; // 클라이언트 ->  서버 스트림
+	Socket clientSocket = null; // 클라이언트 <- 서버 스트림
 	
 	InputStream is = null;
-	
 	OutputStream os = null;
 	
+	// 성능 향상을 위한 보조 스트림
 	BufferedReader br = null;
 	
 	PrintWriter pw = null;
 
+	
+	// 소켓, 스트림 참조 변수를  try,finally에서 모두 사용 할 수 있도록
+	// try 구문 위쪽에 참조변수를 선언
 	try {
 		// 서버 컴퓨터 ( 내 컴퓨터) 의 ip 관련정보를 얻어옴
 		InetAddress inet = InetAddress.getLocalHost();
@@ -86,28 +91,50 @@ public class Server {
 		String message = sdf.format(now)+ "서버접속성공";
 		
 		pw.println(message); // 서버 -> 클라이언트로 메시지 출력
-		pw.flush();
+		pw.flush(); // 스트림 (버퍼)에 기록된 내용을 밀어내는 코드
+		            // -> 미작성 시 클라이언트 쪽으로 출력되지 않아
 		
 		// 7-2) 서버 <- 클라이언트 메시지 받기 (입력)
 		
 		String clientMessage = br.readLine(); //한줄읽기
 		
+		// 클라이언트 IP주소
+		String clientIP = clientSocket.getInetAddress().getHostAddress();
 		System.out.println("클라이언트로 부터 받은 메시지" + clientMessage);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	} catch (Exception e) {
 		e.printStackTrace();
-	}finally {
+		
+	}finally { // try 구문에서 예외 발생 여부 관계 없이 무조건 수행
+		// 사용한 소켓, 스트림을 닫는 코드 작성
+		// (닫다 == 메모리 반환)
+		// -> 메모리 누수 관리
+		
+		// 보통 소켓, 스트림 생성 역순으로  close() 작성
+		
+		try {
+			// 보조 스트림(br,pw) close()시
+			// 보조 스트림 생성에 사용된 기반 스트림 (is ,os)도
+			// 같이 close()된다.
+			
+		if(br != null)	br.close();// + is.close()
+		if(pw != null)pw.close();// + os.close()
+			
+		if(serverSocket != null)		serverSocket.close();
+		if(clientSocket != null)		clientSocket.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}

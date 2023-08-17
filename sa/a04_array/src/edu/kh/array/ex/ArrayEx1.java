@@ -76,20 +76,17 @@ public class ArrayEx1 {
 		// new 연산자 : Heap 영역에 메모리를 새롭게 할당
 		
 		// 배열 직접 초기화
-			
-			numbers[0] = 10;
-			numbers[1] = 100;
-			numbers[2] = 1000;
-			numbers[3] = 10000;
+		numbers[0] = 10000;
+		numbers[1] = 1000;
+		numbers[2] = 100;
+		numbers[3] = 10;
 		// * 인덱스는  0부터 시작해서 배열의 크기 (길이) -1까지이다.
 			
-			
-			System.out.println(numbers[0]);
-			System.out.println(numbers[1]);
-			System.out.println(numbers[2]);
-			System.out.println(numbers[3]);
-			
-			
+		System.out.println(numbers[0]);
+		System.out.println(numbers[1]);
+		System.out.println(numbers[2]);
+		System.out.println(numbers[3]);
+		
 	// * 배열 + 반복문(for)
 			
 			for (int i = 0; i<=3; i++) {
