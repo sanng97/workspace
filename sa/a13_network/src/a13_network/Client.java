@@ -26,7 +26,8 @@ public class Client {
 		BufferedReader br = null;
 		PrintWriter pw = null;
 		
-		try {
+		   try { 
+			   
 			System.out.println("client 입니다.");
 			
 			socket = new Socket(ip, port);
