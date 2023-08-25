@@ -1,4 +1,3 @@
-
 /* 
 [JOIN 용어 정리]
   오라클       	  	                                SQL : 1999표준(ANSI)
@@ -47,7 +46,7 @@ SELECT DEPT_ID, DEPT_TITLE
 FROM DEPARTMENT;
 
 
-SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_ID , DEPT_TITLE
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_ID, DEPT_TITLE
 FROM EMPLOYEE
 JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
 
@@ -70,7 +69,6 @@ JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
 -- WHERE절에 합치기에 사용할 컬럼명을 명시한다
 
 
-
 -- 1) 연결에 사용할 두 컬럼명이 다른 경우
 
 -- EMPLOYEE 테이블, DEPARTMENT 테이블을 참조하여
@@ -85,6 +83,13 @@ JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, DEPT_ID, DEPT_TITLE
 FROM EMPLOYEE
 JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID);
+-- EMPLOYEE의 DEPT_CODE와
+-- DEPARTMENT의 DEPT_ID는 의미가 같은 컬럼(값도 같음)이기 때문에
+-- 두 컬럼을 이용해서 EMPLOYEE, DEPARTMENT 테이블을 하나 합침
+
+-- 하동운, 이오리는 DEPT_CODE가 NULL 이기 때문에
+-- DEPT_ID 중 일치하는 값이 없어서 합친(JOIN) 결과에 포함 X
+
 
 
 -- 오라클 (JOIN이라는 단어를 작성하지 않음)
@@ -94,18 +99,37 @@ WHERE DEPT_CODE = DEPT_ID;
 
 
 
-
-
-
-
 -- DEPARTMENT 테이블, LOCATION 테이블을 참조하여
 -- 부서명, 지역명 조회
 
 -- ANSI 방식
+SELECT DEPT_TITLE, LOCAL_NAME
+FROM DEPARTMENT 
+JOIN LOCATION ON(LOCATION_ID = LOCAL_CODE);
 
 -- 오라클 방식
+SELECT DEPT_TITLE, LOCAL_NAME
+FROM DEPARTMENT, LOCATION 
+WHERE LOCATION_ID = LOCAL_CODE;
 
 
+-- 부서명이 '해외영업2부'인 사원의
+-- 사번, 이름, 부서명을 사번 오름차순으로 조회
+/*3  */SELECT EMP_ID, EMP_NAME, DEPT_TITLE
+/*1-1*/FROM EMPLOYEE
+/*1-2*/JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)
+/*2  */WHERE DEPT_TITLE = '해외영업2부'
+/*4  */ORDER BY EMP_ID;
+
+-- 오라클 방식
+SELECT EMP_ID, EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE, DEPARTMENT 
+WHERE DEPT_CODE = DEPT_ID
+
+-- 오라클 방식 조인 시 추가 조건은 AND 사용
+AND DEPT_TITLE = '해외영업2부' 
+ORDER BY EMP_ID;
+						
 
 -- 2) 연결에 사용할 두 컬럼명이 같은 경우
 -- EMPLOYEE 테이블, JOB테이블을 참조하여
@@ -113,11 +137,17 @@ WHERE DEPT_CODE = DEPT_ID;
 
 -- ANSI
 -- 연결에 사용할 컬럼명이 같은 경우 USING(컬럼명)을 사용함
-
+SELECT EMP_ID, EMP_NAME, 
+	JOB_CODE, JOB_NAME
+FROM EMPLOYEE
+JOIN JOB USING(JOB_CODE);
 
 
 -- 오라클 -> 별칭 사용
 -- 테이블 별로 별칭을 등록할 수 있음.
+SELECT EMP_ID, EMP_NAME, E.JOB_CODE, JOB_NAME
+FROM EMPLOYEE E, JOB J -- 테이블명 별칭  순서로 작성
+WHERE E.JOB_CODE = J.JOB_CODE;
 
 
 
@@ -139,35 +169,67 @@ FROM EMPLOYEE
 -- 컬럼 수를 기준으로 JOIN
 -- ANSI 표준
 
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE LEFT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+--> LEFT JOIN : JOIN 구문 기준으로
+--	왼쪽에 작성된 테이블의 모든 행이 
+--  JOIN 결과에 포함되게 하는 JOIN
 
 
 -- 오라클 구문
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE, DEPARTMENT 
+WHERE DEPT_CODE = DEPT_ID(+);
+--   NULL     =   (D1 ~ D9)(+)
+-- DEPT_CODE의 값(NULL)이
+-- DEPT_ID의 값(D1 ~ D9)과 일치하지 않아도 추가해라
+
 
 
 
 -- 2) RIGHT [OUTER] JOIN : 합치기에 사용한 두 테이블 중 
 -- 오른편에 기술된 테이블의  컬럼 수를 기준으로 JOIN
 -- ANSI 표준
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE RIGHT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID);
+--> RIGHT JOIN : JOIN 구문 기준으로
+--	오른쪽에 작성된 테이블의 모든 행이 
+--  JOIN 결과에 포함되게 하는 JOIN
 
 
 -- 오라클 구문
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE, DEPARTMENT 
+WHERE DEPT_CODE(+) = DEPT_ID;
+
+
 
 -- 3) FULL [OUTER] JOIN   : 합치기에 사용한 두 테이블이 가진 모든 행을 결과에 포함
 -- ** 오라클 구문은 FULL OUTER JOIN을 사용 못함
 
 -- ANSI 표준
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE
+--JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID); -- INNER JOIN (21행)
+--LEFT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID); -- LEFT JOIN (23행, 하동운 ,이오리)
+--RIGHT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID); -- RIGHT JOIN (24행, 마케팅부,국내영업부,해외영업3부)
+FULL JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID); -- FULL JOIN (26행)
 
 
-
-
-
+-- 오라클 방식 사용 불가
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE, DEPARTMENT
+WHERE DEPT_CODE(+) = DEPT_ID(+);
+-- ORA-01468: outer-join된 테이블은 1개만 지정할 수 있습니다
 
 ---------------------------------------------------------------------------------------------------------------
 
 -- 3. 교차 조인(CROSS JOIN == CARTESIAN PRODUCT)
 --  조인되는 테이블의 각 행들이 모두 매핑된 데이터가 검색되는 방법(곱집합)
-
-
+-- (자연 조인 실패 결과물로 확인 가능 == 자연 조인 잘못했구나...)
+SELECT EMP_NAME, DEPT_CODE, DEPT_ID, DEPT_TITLE
+FROM EMPLOYEE
+CROSS JOIN DEPARTMENT;
 
 ---------------------------------------------------------------------------------------------------------------
 
@@ -175,7 +237,12 @@ FROM EMPLOYEE
 
 -- '='(등호)를 사용하지 않는 조인문
 --  지정한 컬럼 값이 일치하는 경우가 아닌, 값의 범위에 포함되는 행들을 연결하는 방식
-
+SELECT EMP_NAME, SALARY, E.SAL_LEVEL, S.SAL_LEVEL
+FROM EMPLOYEE E
+JOIN SAL_GRADE S ON ( SALARY BETWEEN MIN_SAL AND MAX_SAL );
+-- 사원의 급여가
+-- SAL_LEVEL에 작성된 최소(MIN_SAL) ~ 최대(MAX_SAL) 
+-- 범위의 급여가 맞을 때만 JOIN
 
 ---------------------------------------------------------------------------------------------------------------
 
@@ -184,12 +251,24 @@ FROM EMPLOYEE
 -- 같은 테이블을 조인.
 -- 자기 자신과 조인을 맺음
 
--- ANSI 표준
+--   사번,   이름,    사수번호, 사수 이름 조회
+-- EMP_ID, EMP_NAME, MANAGER_ID, EMP_NAME
 
+-- TIP. 하나의 테이블만 생각하지 말고
+--      똑같은 테이블이 두 개가 있다고 생각하자!!
+
+-- ANSI 표준
+SELECT EMP.EMP_ID, EMP.EMP_NAME, EMP.MANAGER_ID, MGR.EMP_NAME
+FROM EMPLOYEE EMP
+LEFT JOIN EMPLOYEE MGR ON (EMP.MANAGER_ID = MGR.EMP_ID);
+--> EMP 테이블에서 찾으려는 사수의 이름이
+--  MGR 테이블에 있다
 
 
 -- 오라클 구문
-
+SELECT EMP.EMP_ID, EMP.EMP_NAME, EMP.MANAGER_ID, MGR.EMP_NAME
+FROM EMPLOYEE EMP, EMPLOYEE MGR
+WHERE EMP.MANAGER_ID = MGR.EMP_ID(+);
 
 
 ---------------------------------------------------------------------------------------------------------------
@@ -199,19 +278,44 @@ FROM EMPLOYEE
 -- 반드시 두 테이블 간의 동일한 컬럼명, 타입을 가진 컬럼이 필요
 --> 없을 경우 교차조인이 됨.
 
+SELECT EMP_NAME, JOB_NAME
+FROM EMPLOYEE 
+--JOIN JOB USING(JOB_CODE);
+NATURAL JOIN JOB;
+
+
+-- NATRAL JOIN이 성립되지 않을 때
+SELECT EMP_NAME, DEPT_TITLE
+FROM EMPLOYEE 
+NATURAL JOIN DEPARTMENT;
+--> CROSS JOIN 결과가 나타남
+
 
 ---------------------------------------------------------------------------------------------------------------
 
 -- 7. 다중 조인
 -- N개의 테이블을 조회할 때 사용  (순서 중요!)
 
+-- EMPLOYEE, DEPARTMENT, LOCATION 3개 테이블 조인
+
 -- ANSI 표준
+SELECT EMP_NAME, DEPT_TITLE, LOCAL_NAME
+FROM EMPLOYEE
+JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON (LOCATION_ID = LOCAL_CODE);
 
 
 -- 오라클 전용
+SELECT EMP_NAME, DEPT_TITLE, LOCAL_NAME
+FROM EMPLOYEE, DEPARTMENT, LOCATION
+WHERE DEPT_CODE = DEPT_ID
+AND   LOCATION_ID = LOCAL_CODE;
 
 
 -- 조인 순서를 지키지 않은 경우(에러발생)
+
+
+
 
 
 
@@ -221,8 +325,24 @@ FROM EMPLOYEE
 -- 사번, 이름, 직급명, 부서명, 근무지역명, 급여를 조회하세요
 
 -- ANSI
+SELECT EMP_ID, EMP_NAME, JOB_NAME, DEPT_TITLE, LOCAL_NAME, SALARY
+FROM EMPLOYEE  
+JOIN JOB USING(JOB_CODE)
+JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON(LOCATION_ID = LOCAL_CODE)
+WHERE JOB_NAME = '대리'
+AND LOCAL_NAME LIKE 'ASIA%';
+
+
 
 -- 오라클 전용
+SELECT EMP_ID, EMP_NAME, JOB_NAME, DEPT_TITLE, LOCAL_NAME, SALARY
+FROM EMPLOYEE E, JOB J, DEPARTMENT, LOCATION 
+WHERE E.JOB_CODE = J.JOB_CODE
+AND   DEPT_CODE = DEPT_ID
+AND   LOCATION_ID = LOCAL_CODE
+AND   JOB_NAME = '대리'
+AND   LOCAL_NAME LIKE 'ASIA%';
 
 
 
@@ -234,39 +354,99 @@ FROM EMPLOYEE
 
 -- 1. 주민번호가 70년대 생이면서 성별이 여자이고, 성이 '전'씨인 직원들의 
 -- 사원명, 주민번호, 부서명, 직급명을 조회하시오.
+SELECT EMP_NAME, EMP_NO, DEPT_TITLE, JOB_NAME
+FROM EMPLOYEE
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+JOIN JOB USING(JOB_CODE)
+WHERE SUBSTR(EMP_NO,1,1) = '7'
+AND   SUBSTR(EMP_NO,8,1) = '2'
+AND   EMP_NAME LIKE '전%';
 
       
       
--- 2. 이름에 '형'자가 들어가는 직원들의 사번, 사원명, 부서명을 조회하시오.
-
+-- 2. 이름에 '형'자가 들어가는 직원들의 사번, 사원명, 직급명을 조회하시오.
+SELECT EMP_ID, EMP_NAME, JOB_NAME
+FROM EMPLOYEE
+NATURAL JOIN JOB -- JOIN JOB USING(JOB_CODE)
+WHERE EMP_NAME LIKE '%형%';
 
 
 -- 3. 해외영업 1부, 2부에 근무하는 사원의 
 -- 사원명, 직급명, 부서코드, 부서명을 조회하시오.
+-- + 사번 오름차순 정렬
+SELECT EMP_NAME, JOB_NAME, DEPT_CODE, DEPT_TITLE
+FROM EMPLOYEE 
+JOIN JOB USING(JOB_CODE)
+JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)
+WHERE DEPT_TITLE IN ('해외영업1부', '해외영업2부')
+ORDER BY EMP_ID;
 
 
---4. 보너스포인트를 받는 직원들의 사원명, 보너스포인트, 부서명, 근무지역명을 조회하시오.
+--4. 보너스포인트를 받는 직원들의 
+--사원명, 보너스포인트, 부서명, 근무지역명을 조회하시오.
+SELECT EMP_NAME, BONUS, DEPT_TITLE, LOCAL_NAME
+FROM EMPLOYEE 
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON (LOCATION_ID = LOCAL_CODE)
+WHERE BONUS IS NOT NULL;
 
 
 --5. 부서가 있는 사원의 사원명, 직급명, 부서명, 지역명 조회
+SELECT EMP_NAME, JOB_NAME, DEPT_TITLE, LOCAL_NAME
+FROM EMPLOYEE
+JOIN JOB USING (JOB_CODE)
+/*INNER*/ 
+JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON(LOCATION_ID = LOCAL_CODE);
+
+
+-- 하동운, 이오리도 포함
+SELECT EMP_NAME, JOB_NAME,  NVL(DEPT_TITLE,'없음'), NVL(LOCAL_NAME,'없음')
+FROM EMPLOYEE
+JOIN JOB USING (JOB_CODE)
+LEFT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+LEFT JOIN LOCATION ON(LOCATION_ID = LOCAL_CODE);
 
 
 -- 6. 급여등급별 최소급여(MIN_SAL)를 초과해서 받는 직원들의
 --사원명, 직급명, 급여, 연봉(보너스포함)을 조회하시오.
 --연봉에 보너스포인트를 적용하시오.
+SELECT EMP_NAME, JOB_NAME, SALARY,
+	SALARY * (1 + NVL(BONUS,0) ) * 12 연봉
+FROM EMPLOYEE
+JOIN JOB USING(JOB_CODE)
+JOIN SAL_GRADE USING(SAL_LEVEL)
+WHERE MIN_SAL < SALARY
+ORDER BY EMP_ID;
 
 
 
 -- 7.한국(KO)과 일본(JP)에 근무하는 직원들의 
 -- 사원명, 부서명, 지역명, 국가명을 조회하시오.
-
+SELECT EMP_NAME 사원명, DEPT_TITLE 부서명, 
+	LOCAL_NAME 지역명, NATIONAL_NAME 국가명
+FROM EMPLOYEE
+JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)
+JOIN LOCATION ON (LOCATION_ID = LOCAL_CODE)
+JOIN NATIONAL USING(NATIONAL_CODE)
+WHERE NATIONAL_NAME IN ('한국', '일본');
+--WHERE NATIONAL_CODE IN ('KO', 'JP');
 
 
 -- 8. 같은 부서에 근무하는 직원들의 사원명, 부서코드, 동료이름을 조회하시오.
 -- SELF JOIN 사용
+SELECT A.EMP_NAME, A.DEPT_CODE, B.EMP_NAME
+FROM EMPLOYEE A
+JOIN EMPLOYEE B ON (A.DEPT_CODE = B.DEPT_CODE)
+WHERE A.EMP_ID != B.EMP_ID
+ORDER BY 1;
 
 
-
--- 9. 보너스포인트가 없는 직원들 중에서 직급코드가 J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.
+-- 9. 보너스포인트가 없는 직원들 중에서 직급코드가 
+-- J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.
 -- 단, JOIN, IN 사용할 것
-
+SELECT EMP_NAME, JOB_NAME, SALARY
+FROM EMPLOYEE
+JOIN JOB USING(JOB_CODE)
+WHERE JOB_CODE IN ('J4', 'J7')
+AND BONUS IS NULL;
