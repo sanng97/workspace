@@ -52,8 +52,20 @@ public class Member {
 		
 	}
 	
-	
-	
+
+	public Member(int memberNo, String memberEmail, String memberPw, String memberNickname, String memberTel,
+			String memberAddress, String enrollDate, String memberDelFl) {
+		super();
+		this.memberNo = memberNo;
+		this.memberEmail = memberEmail;
+		this.memberPw = memberPw;
+		this.memberNickname = memberNickname;
+		this.memberTel = memberTel;
+		this.memberAddress = memberAddress;
+		this.enrollDate = enrollDate;
+		this.memberDelFl = memberDelFl;
+	}
+
 	// getter/setter (alt + shift +s -->r)
 	public int getMemberNo() {
 		return memberNo;
