@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 실습문제2</title>
+</head>
+<body>
+  
+<form action="result.html" method="get" target="_blank"></form>
+
+<fieldset>
+ 
+  <br>
+  <legend>납품자 정보</legend>
+  1. 납품자명 : <input type = "text" name="inputId"> <br>
+  <p></p>
+  2. email : <input type = "email" name="inputemail"> <br>
+  <p></p>
+
+  3. 홈페이지 : <input type = "page" id="inputmode"
+  value = "http://"> <br>
+  <p></p>
+  4. 지역 :<select name="result.html">
+    <p></p>
+    <option value ="">부산</option>
+
+   </select>
+
+</fieldset>
+
+
+<fieldset>
+<legend>납품 정보</legend>
+
+<ul>
+  <li>상품명 :  <input type="text" size="20" name="lname"></li><br>
+  <li>납품수량 :<input type ="text" size ="20" name="lname" placeholder ="최소 100"> </li><br>
+  <li>납품등급 :<input id = "range" type = "range" min = "0" max="100" step ="5" value="50"></li><br>
+  <li>기타사항 : <textarea name = "inputId" cols="30" rows = "5"></textarea></li>
+</ul>
+
+
+</fieldset>
+
+<br>
+
+<input type = "submit" value="send message">
+
+</body>
+</html>
