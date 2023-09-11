@@ -165,3 +165,20 @@ background-color: blue;
 
 .col6-1{ background-color: lightseagreen;}
 .col6-2{ background-color: lightcoral;}
+
+
+/* display: none 확인하기 */
+.div-7{
+  border :1px solid black;
+  height: 50px;
+  background-color: lightcoral;
+}
+
+#div-7-2{
+display: none;
+
+}
+
+#div-7-4{
+  visibility: hidden;
+}
