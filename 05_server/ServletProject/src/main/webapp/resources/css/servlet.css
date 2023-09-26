@@ -1,0 +1,29 @@
+/* servlet.css 입니다*/
+
+:root{
+  /* 페이지 전체 폰트 기본 크기*/
+  font-size: 62.5%; /*== 10px */
+}
+ 
+/* rem : root 작성된 font-stze 비례하는 단위
+    1rem == 100%*/
+
+
+*{
+  font-size : 1.6rem;
+}
+
+
+
+h1{ font-size: 4rem};
+h1{ font-size: 3rem;}
+
+
+
+
+.container{
+  display : flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 25rem;
+}
