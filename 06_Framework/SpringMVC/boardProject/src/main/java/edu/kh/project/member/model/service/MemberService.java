@@ -1,0 +1,18 @@
+package edu.kh.project.member.model.service;
+
+import edu.kh.project.member.model.dto.Member;
+
+// Interface 사용이유 
+// 1) 프로젝트 규칙성 부여
+// 2) 클래스간의 결합도 약화 (객체 지향적 설계)
+
+// Service Interface를 사용하는 이유
+// -Spring AOP를 이요한 트랜잭션 처리를 위해서
+
+public interface MemberService {
+
+	Member login(Member inputMember);
+
+	
+
+}
