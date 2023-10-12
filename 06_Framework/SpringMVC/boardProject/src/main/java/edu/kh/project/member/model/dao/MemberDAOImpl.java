@@ -27,4 +27,18 @@ import edu.kh.project.member.model.dto.Member;
 	}
 	
 	
+	@Override
+	public int signup(Member inputMember) {
+		// int sqlSession.insert("namespace.id[, 파라미터])
+		
+		// - insert(), update(),delete()
+		// 메서드의 결과는 성공한 행의 개수 int타입 반환
+		return sqlSession.insert("memberMapper.signup", inputMember);
+		
+		// -> mybatis-config.xml에 등록된 인 파일 내에서
+		// id가  "signup"인 SQL 태그 (INSERT)를 수행
+		// 이때 , 파라미터로 inputMember를 전달 하여 sql수행
+		
+		// sql 수행 완료 후 insert 결과 행의개수를 반환받음
+	}
 }
