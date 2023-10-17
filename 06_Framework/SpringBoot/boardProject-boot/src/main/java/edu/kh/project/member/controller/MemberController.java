@@ -3,9 +3,12 @@ package edu.kh.project.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.member.model.dto.Member;
@@ -14,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j  //로그
 @Controller //controller역할(요청/응답 제어) + bean 등록
-@RequestMapping("/member")
+@RequestMapping("member")
 @SessionAttributes({"loginMember"})// 세션올리기
 public class MemberController {
 
@@ -53,4 +56,61 @@ public class MemberController {
 		
 	}
 	 
+	
+	 /** 로그아웃
+    * @param status
+    * @return
+    */
+   @GetMapping("logout")
+   public String logout(SessionStatus status) {
+      status.setComplete(); // @SessionAttributes session 만료
+      return "redirect:/";
+   }
+   
+   
+   /** 로그인 전용 페이지 forward
+    * @return "member/login"
+    */
+   @GetMapping("login")
+   public String login() {
+      return "member/login";
+   }
+   
+   
+   /** 회원가입 페이지 forward
+    * @return
+    */
+   @GetMapping("signup")
+   public String signup() {
+      // templates/member/signup.html로 forward
+      return "member/signup";
+   }
+   /**
+    * 회원가입
+    * @param inputMember : 파라미터가 저장된 커맨드 객체
+    * @param memberAddress : 주소 입력 값이 저장된 배열 (가공예정)
+    * @param ra : 리다이렉트 시 request scope로 값 전달
+    * @return
+    */
+   
+   @PostMapping("signup")
+   public String signup(Member inputMember,
+		   String[]memberAddress, RedirectAttributes ra) {
+	   
+	   // 회원가입 서비스 호출
+	   int result = service.signup(inputMember,memberAddress);
+	   
+	   // 회원가입 성공 시
+	   if(result >0) {
+		   ra.addFlashAttribute("message","회원 가입 성공");
+		   return "redirect:/"; // 메인페이지
+	   }
+	   // 회원 가입 실패
+	   ra.addFlashAttribute("message","가입실패");
+	   return "redirect:signup"; // 회원가입 페이지(상대경로 작성)
+	   
+   }
+   
+   
+   
 }

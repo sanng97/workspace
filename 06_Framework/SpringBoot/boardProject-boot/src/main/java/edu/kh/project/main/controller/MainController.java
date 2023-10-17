@@ -2,7 +2,9 @@ package edu.kh.project.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import edu.kh.project.member.model.dto.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +40,7 @@ public class MainController {
 		log.debug("로그는 이렇게 찍을 수 있습니다");
 		log.debug("메인 페이지 요청이 왔습니다.");
 		
-		/*Thymeleaf 템플릿 엔진 사용시 접두사 , 접미사     */
+		/*Thymeleaf 템플릿 엔진 사용시 접두사 , 접미사 */
 		//  접두사 : classpath:/templates/
 		//  접미사 : .html
 		
@@ -50,6 +52,8 @@ public class MainController {
 		return "common/main";
 		
 	}
+
+	   
 	
 
 }

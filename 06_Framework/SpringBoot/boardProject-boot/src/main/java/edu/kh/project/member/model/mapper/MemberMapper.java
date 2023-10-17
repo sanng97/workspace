@@ -28,8 +28,15 @@ import edu.kh.project.member.model.dto.Member;
 
 @Mapper
 public interface MemberMapper {
+	/**
+	 * 회원가입
+	 * @param inputMember
+	 * @return loginMember
+	 */
 	
 	Member login(Member inputMember);
+
+	int signup(Member inputMember);
 	
 	
 }
