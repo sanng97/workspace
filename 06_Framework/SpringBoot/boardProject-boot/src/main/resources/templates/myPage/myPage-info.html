@@ -23,7 +23,9 @@
                 <h1 class="myPage-title">내 정보</h1>
                 <span class="myPage-subject">원하는 회원 정보를 수정할 수 있습니다.</span>
             
-              
+                
+
+
                 <form action="info" method="POST" name="myPageFrm" 
                 id="updateInfo" th:object="${session.loginMember}" >
 
@@ -82,15 +84,14 @@
             const arr = memberAddress.split("^^^"); // [A,B,C]
 
             // 2) name 속성 값이  "memberAddress" 인 요소를 모두 얻어옴
-            const inputs = document.querySelectiorAll("[name='memberAddress']");
+            const inputs = document.querySelectorAll("[name='memberAddress']");
 
             // 3) input 요소에 arr의 값을 순서대로 대입
-
             // 배열 | NodeList.forEach( (item, index) => {} )
             // - 배열 | NodeList의 모든 요소를 순차 접근하는 향상된 for문
             // -item : 현재 접근 중인 요소
             // - index : 현재 접근 중인 요소의 인덱스
-            inputs.forEach((item, index))=> {
+            inputs.forEach((item, index)=> {
                 item.value = arr[index];
 
             });

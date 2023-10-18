@@ -13,5 +13,7 @@ public interface MemberService {
 
 	int signup(Member inputMember, String[] memberAddress);
 
+	Member quickLogin(String memberEmail);
+
 }
 
