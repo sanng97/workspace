@@ -149,6 +149,7 @@ public class MyPageController {
 		if(result >0) {
 			message= "탈퇴되었습니다";
 			status.setComplete();
+			path = "redirect:/";
 		}else {
 			message ="비밀번호가 일치하지 않습니다";
 			path = "redirect:secession";
