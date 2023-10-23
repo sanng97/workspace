@@ -40,7 +40,7 @@ public class MemberServicelmpl implements MemberService {
 		
 		//4. 비밀번호가 일치하면 비밀번호 제거 후 return
 		loginMember.setMemberPw(null);
-
+ 
 		return loginMember;
 	}
 	

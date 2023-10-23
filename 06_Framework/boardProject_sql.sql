@@ -85,7 +85,7 @@ MEMBER_ADDRESS ='AAA^^^BBB^^^CCC'
 WHERE MEMBER_NO =2;
 
 ROLLBACK;
-SELECT * FROM "MEMBER" ;
+CREATE SEQUENCE SEQ_CUSTOMER_NO NOCACHE;
 
 --BCrypt 암호화 시 비밀번호를 조회한 후
 -- matches() 메서드를 이용해서 비교

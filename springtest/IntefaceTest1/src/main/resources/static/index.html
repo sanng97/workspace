@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객(Costomer) 추가</title>
+</head>
+<body>
+    <h1>고객 추가</h1>
+    <th:block th:replace="~{common/common}"></th:block>
+
+    <section class="signUp-content">
+        <form action="/static/index" method="POST" name="indexFrm"></form>
+
+        <label for ="customerName">
+            <span class="required"></span>이름:
+        <input type="text" name="customerName" id="customerName"
+            placeholder="" maxlength="30" autocomplete="off">
+            
+        </label>
+
+    
+
+        
+    <section class="customerTel">
+        <form action="/static/index" method="POST" name="indexFrm2"></form>
+
+        <label for ="customerTel">
+            <span class="required"></span>전화번호:
+            <input type="text" name="customerTel" id="customerTel"
+            placeholder="" maxlength="30" autocomplete="off">
+        </label>
+
+
+        
+    <section class="custormerAddress">
+        <form action="/static/index" method="POST" name="indexFrm3"></form>
+
+        <label for ="customerAddress">
+            <span class="required"></span>주소:
+            <input type="text" name="custormerAddress" id="custormerAddress"
+            placeholder="" maxlength="30" autocomplete="off">
+        </label>
+
+
+
+
+
+
+
+        <br>
+        <button id="checkAuthKeyBtn" type="button">추가</button>
+    </section>
+</body>
+</html>

@@ -12,6 +12,8 @@
     <jsp:include page="/WEB-INF/views/common/common.jsp" />
     <link rel="stylesheet" href="/resources/css/member/signup-style.css">
 </head>
+
+
 <body>
     <main>
         <%-- header.jsp include --%>
