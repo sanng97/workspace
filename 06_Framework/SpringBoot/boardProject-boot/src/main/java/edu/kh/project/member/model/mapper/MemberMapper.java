@@ -39,5 +39,9 @@ public interface MemberMapper {
 	int signup(Member inputMember);
 	
 	Member login (String memberEmail);
+
+	int checkEmail(String email);
+
+	int checkNickName(String nickname);
 	
 }

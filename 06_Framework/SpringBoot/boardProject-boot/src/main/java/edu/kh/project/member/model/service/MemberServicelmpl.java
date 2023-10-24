@@ -68,5 +68,15 @@ public class MemberServicelmpl implements MemberService {
 		return mapper.login(memberEmail);
 	}
 	
+	@Override
+	public int checkEmail(String email) {
+		
+		return mapper.checkEmail(email);
+	}
 	
+	@Override
+	public int checkNickName(String nickname) {
+
+		return mapper.checkNickName(nickname);
+	}
 }

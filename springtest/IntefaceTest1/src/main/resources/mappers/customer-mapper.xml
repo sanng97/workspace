@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.kh.test.customer.model.mapper.customerMapper">
-	<insert id="customer"  parameterType="Member" >
-     INSERT INTO "CUSTOMER"
-     VALUES(SEQ_MEMBER_NO.NEXTVAL, #{customerNO},
-     #{customername}, #{customerTel}, 
-     #{mcustomerAddress},
-     NULL, DEFAULT, DEFAULT, DEFAULT
-      )
-   </insert>
-   
+<!-- 연결할 인터페이스의 패키지명.인터페이스명을 작성 -->
+<mapper namespace="com.kh.test.customer.model.mapper.CustomerMapper">
+
+
+<!-- sql문 작성한거 옮겨적기-->
+	<insert id="insertCustomer">
 	
+		INSERT INTO CUSTOMER
+		
+		VALUES(SEQ_CUSTOMER_NO.NEXTVAL, #{customerName}, #{customerTel}, #{customerAddress})
+		
+	</insert>
+
 </mapper>

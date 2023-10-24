@@ -15,5 +15,9 @@ public interface MemberService {
 
 	Member quickLogin(String memberEmail);
 
+	int checkEmail(String email);
+
+	int checkNickName(String nickname);
+
 }
 

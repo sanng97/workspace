@@ -67,13 +67,46 @@ const regEx = /^[A-Za-z\d\-\_]{4,}@[가-힣\w\-\_]+(\.\w+){1,3}$/;
 
 // 입력 받은 이메일이 정규식과 일치하는 경우
 if(regEx.test(memberEmail.value)) {
-  emailMessage.innerText="유효한 이메일 형식입니다."
-  emailMessage.classList.add("confirm"); // 초록색 글씨
-  emailMessage.classList.remove("error"); // 빨간 글씨 제거
-  checkObj.memberEmail=true; // 유효한 상태임을 기록
 
-  // 입력 받은 이메일이 정규식과 일치하는 않는 경우 
+/* ===== 이메일 중복 검사 (비동기) ==== */
+
+ fetch("/member/checkEmail?email=" +memberEmail.value)
+.then(response => response.text()) 
+.then(result => {
+  if(result == 0){ // 중복 x
+
+    emailMessage.innerText="사용가능한 이메일 입니다"
+    emailMessage.classList.add("confirm"); // 초록색 글씨
+    emailMessage.classList.remove("error"); // 빨간 글씨 제거
+    checkObj.memberEmail=true; // 유효한 상태임을 기록
+  
+
+
+  }else{  //중복 o
+
+    
+  emailMessage.innerText="이미 사용중인 이메일 입니다."
+  emailMessage.classList.add("error"); // 초록색 글씨
+  emailMessage.classList.remove("confirm"); // 빨간 글씨 제거
+  checkObj.memberEmail=false; 
+
+
+  }
+ } )
+.catch (e => console.log(e))
+
+
+
+
+
+
+
+
+
+
+  
 }
+// 입력 받은 이메일이 정규식과 일치하는 않는 경우 
 
 else{
   emailMessage.innerText="알맞은 이메일 형식으로 작성해주세요"
@@ -178,7 +211,7 @@ memberPwConfirm.addEventListener('input', ()=>{
     }
 });
 
-
+/* 닉네임*/
 const memberNickname = document.getElementById("memberNickname");
 const nickMessage = document.getElementById("nickMessage");
 
@@ -202,10 +235,32 @@ const regEx = /^[가-힣\w\d]{2,10}$/;
 
 
 if(regEx.test(memberNickname.value)) {
-  nickMessage.innerText="유효한 닉네임 형식입니다."
-  nickMessage.classList.add("confirm"); 
-  nickMessage.classList.remove("error"); 
-  checkObj.memberNickname=true; 
+
+
+  /* ===== 닉네임 중복 검사 (비동기) ==== */
+
+  fetch("/member/checkNickname?nickname=" + memberNickname.value)
+  .then(response => response.text())
+  .then(result => {
+      if(result == 0) { //중복 x
+
+        nickMessage.innerText="사용가능한 닉네임 입니다";
+        nickMessage.classList.add("confirm"); 
+        nickMessage.classList.remove("error"); 
+        checkObj.memberNickname=true; 
+
+
+      }else{
+        nickMessage.innerText="이미 사용중인 닉네임 입니다";
+        nickMessage.classList.add("error"); 
+        nickMessage.classList.remove("confirm"); 
+        checkObj.memberNickname=false; 
+      
+      }
+  })
+
+  .catch (e => console.log(e));
+
 }
  
 
@@ -351,7 +406,6 @@ else{
 
 
 }
-
 
 });
 

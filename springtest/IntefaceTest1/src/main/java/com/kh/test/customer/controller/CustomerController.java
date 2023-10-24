@@ -1,44 +1,43 @@
 package com.kh.test.customer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.test.customer.model.dto.Customer;
+
 import com.kh.test.customer.model.service.CustomerService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Controller
-@RequestMapping("customer")
-@SessionAttributes({"CustomerMember"})
-
+@Controller // controller역할(요청/응답 제어) + bean 등록
 
 public class CustomerController {
-	
+
+	// MemberService 의존성 주입
 	@Autowired
 	private CustomerService service;
-	
-	   @PostMapping("customer")
-	   public String signup(Customer inputcustomer,
-			   String[]customerAddress, RedirectAttributes ra) {
-		
-		   int result = service.customer(inputcustomer,customerAddress);
-		   
-		 
-		   if(result >0) {
-			   ra.addFlashAttribute("message","홍길동 고객님 추가 성공");
-			   return "redirect:/"; // 메인페이지
-		   }
-		return null;
-		   
-	   
 
-	   }
+	@PostMapping("insertCustomer")
+
+	public String insertCustomer(Customer customer, Model model) {
+
+		int result = service.insertCustomer(customer);
+
+		// 로그인 성공 시
+
+		if (result > 0)
+			model.addAttribute("message", "추가 성공!!!");
+
+		// 로그인 실패 시
+		else
+			model.addAttribute("message", "추가 실패...");
+
+		// 결과값 반환
+		return "result";
+
+	}
+
 }
-
-	   

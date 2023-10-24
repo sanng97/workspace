@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -195,11 +196,50 @@ public class MemberController {
 	   
    }
    
+   /* [HttpMessageConverter]
+    * 
+    * Spring에서 비동기 통신 시
+    *  - 전달되는 데이터의 자료형
+    *  - 응답하는 데이터의 자료형
+    *  위 두가지 알맞은 형태로 가공해(변환)해주는 객체
+    *  
+    *  - 문자열, 숫자 <-> TEXT
+    *  - Map <-> JSON
+    *  - DTO <-> JSON
+    *  
+    *  (참고)
+    *  ->>>> HttpMessage 가 동작하기 위해서는
+    *  Jackeon-data.bilnd 라이브라리가 필요한데
+    *  spring Boot Web 모듈에 내정되어있음
+    *  Jackeon==> 자바에서 json 다루는 방법 제공하는 라이브러리
+    */
    
    
    
+   /**
+    *  이메일 중복 검사
+    * @param email
+    * @return0 또는 1
+    */
+   @GetMapping("checkEmail")
+   @ResponseBody
+   public int checkEmail(String email) {
+	 
+	   return service.checkEmail(email);
+   }
+   
+  /**
+   * 닉네임 중복검사
+   * @param nickname
+   * @return
+   */
+   @GetMapping("checkNickname")
+   @ResponseBody
+   public int checkNickName(String nickname) {
+	   return service.checkNickName(nickname);
+   }
    
    
-   
-   
+
+
 }
