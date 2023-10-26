@@ -5,6 +5,7 @@ import com.kh.test.customer.model.dto.Customer;
 
 public interface CustomerService {
 
+	
 int insertCustomer(Customer customer);
 
 }
