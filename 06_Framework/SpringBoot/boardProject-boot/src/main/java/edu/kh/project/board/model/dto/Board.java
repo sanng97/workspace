@@ -1,5 +1,7 @@
 package edu.kh.project.board.model.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,6 +37,12 @@ public class Board {
 	private int likeCount;
 	private String memberNickname;
 	private String thumbnauil;
+	
+	
+	private String profileImg;
+	
+	// 댓글 목록을 저장할 필드
+	private List<Comment> commentList;
 	
 	
 
