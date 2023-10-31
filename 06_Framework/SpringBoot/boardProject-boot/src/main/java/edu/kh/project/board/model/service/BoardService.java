@@ -16,5 +16,32 @@ public interface BoardService {
 	Map<String, Object> selectBoardList(int boardCode, int cp);
 
 	Board boardDetail(Map<String, Object> map);
+	
+	/**
+	 * 게시글 상세 조회
+	 * @param map
+	 * @return
+	 */
+
+	int likeCheck(Map<String, Object> map);
+	
+	/**
+	 * 좋아요 처리
+	 * @param paramMap
+	 * @return
+	 */
+
+	int like(Map<String, Object> paramMap);
+	
+	
+	/**
+	 * 조회수 증가
+	 * @param boardNo
+	 * @return result
+	 */ 
+	int updateReadCount(int boardNo);
+
+	
+
 
 }

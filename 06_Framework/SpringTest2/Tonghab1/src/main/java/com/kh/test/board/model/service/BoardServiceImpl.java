@@ -10,27 +10,24 @@ import com.kh.test.board.model.dto.Board;
 
 import com.kh.test.board.model.mapper.BoardMapper;
 
+// service bean 객체 불러오기
+@Service
 
+public class BoardServiceImpl implements BoardService {
 
-		// service bean 객체 불러오기
-		@Service
-	
-			public class BoardServiceImpl implements BoardService {
-		
-		// boardMapper 불러오기
-		@Autowired
+	// boardMapper 불러오기
+	@Autowired
 
-			private BoardMapper mapper;
-		
-		
-		// service에서 가져온거
+	private BoardMapper mapper;
 
-		@Override
+	// service에서 가져온거
 
-			public List<Board> selectBoard(String inputTtile) {
+	@Override
 
-			return mapper.selectBoard(inputTtile);
+	public List<Board> selectBoard(String inputTtile) {
 
-}
+		return mapper.selectBoard(inputTtile);
+
+	}
 
 }
