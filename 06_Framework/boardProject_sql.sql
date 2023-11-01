@@ -622,7 +622,11 @@ VALUES(1,1400);
 ROLLBACK;
 
 
+--회원 프로필 이미지 추가
+UPDATE "MEMBER" SET 
+PROFILE_IMG = '/images/member/profile-sample.jpg'
+WHERE MEMBER_NO = 1;
 
-
+COMMIT;
 
 
