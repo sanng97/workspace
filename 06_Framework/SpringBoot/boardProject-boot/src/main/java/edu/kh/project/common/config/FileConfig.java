@@ -42,7 +42,7 @@ public class FileConfig implements WebMvcConfigurer{
 		// file:/// C:/workspace/project-resources/images/ 폴더로 연결
 		
 		registry.addResourceHandler("/pdf/**")
-		.addResourceLocations("// file:/// C:/workspace/project-resources/pdf/");
+		.addResourceLocations("file:///C:/workspace/project-resources/pdf/");
 		
 		
 	}

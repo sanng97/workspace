@@ -8,7 +8,7 @@
 		1) 조회된 데이터의 컬럼명과 DTO 필드명이 일치하지 않을 때
 		이를 매핑시키는 용도
 		
-		2) resultMap 사
+
 		
 		
 	-->
@@ -30,6 +30,13 @@
       column="BOARD_NO"
       javaType="java.util.ArrayList"
       ofType="Comment"/>
+      
+      
+            <collection property="imageList" 
+               select="selectImageList" 
+               column="BOARD_NO"
+               javaType="java.util.ArrayList"
+               ofType="BoardImg" />
 		
 	</resultMap>
 	
@@ -41,6 +48,8 @@
 		AND BOARD_CODE = #{boardCode}
 
 	</select>
+	
+	
 	
 	<!--게시글 상세 조회-->
 	<select id="boardDetail" resultMap="board_rm">
@@ -160,11 +169,15 @@
 			UPDATE "BOARD" SET
 			READ_COUNT=READ_COUNT +1
 			WHERE BOARD_NO= #{boardNo}
-			
-			
-			
+
 		</update>
 		
+   <!-- 특정 게시글 이미지 조회 -->
+   <select id="selectImageList" resultType="BoardImg">
+      SELECT * FROM BOARD_IMG
+      WHERE BOARD_NO = #{boardNo}
+      ORDER BY IMG_ORDER
+   </select>
 		
 		
 		

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.board.model.dto.Board;
+import edu.kh.project.board.model.dto.BoardImg;
 import edu.kh.project.board.model.service.BoardService;
 import edu.kh.project.member.model.dto.Member;
 import jakarta.servlet.http.Cookie;
@@ -237,26 +238,26 @@ public class BoardController {
 	         }
 
 	         // ----------------------------------------------------
+
+	         if (board.getImageList().size() > 0) {
+
+	             BoardImg thumbnail = null;
+	             
+	             // 썸네일이 존재하면
+	             if (board.getImageList().get(0).getImgOrder() == 0) {
+	                thumbnail = board.getImageList().get(0);
+	             }
+
+	             model.addAttribute("thumbnail", thumbnail);
+	             model.addAttribute("start", thumbnail != null ? 1 : 0);
+	          }
+	       
 	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	         
-	      } else { // 게시글이 없을 경우
+	      } 
+	      
+	      else { // 게시글이 없을 경우
+	    	  
+	    	  
 	         path = "redirect:/board/" + boardCode;
 	         ra.addFlashAttribute("message", "해당 게시글이 존재하지 않습니다.");
 	      }
