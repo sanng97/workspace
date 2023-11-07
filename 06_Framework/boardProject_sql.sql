@@ -629,4 +629,10 @@ WHERE MEMBER_NO = 1;
 
 COMMIT;
 
+-- 특정 게시글의 이미지 중
+-- 지정된 순서 번째 이미지 삭제 
+	DELETE FROM "BOARD_IMG"
+	WHERE BOARD_NO =#{boardNo}
+	AND IMG_ORDER IN (0,2,1,3);
 
+SELECT * FROM BOARD_IMG WHERE BOARD_NO = 1514;

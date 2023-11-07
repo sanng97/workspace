@@ -17,6 +17,16 @@ public interface BoardService {
 
 	Board boardDetail(Map<String, Object> map);
 	
+	
+	
+	/**
+	 * 검색 목록 조회
+	 * @param paramMap
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> searchBoardList(Map<String, Object> paramMap, int cp);
+	
 	/**
 	 * 게시글 상세 조회
 	 * @param map
@@ -40,6 +50,11 @@ public interface BoardService {
 	 * @return result
 	 */ 
 	int updateReadCount(int boardNo);
+
+
+	
+	
+
 
 	
 

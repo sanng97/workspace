@@ -34,6 +34,7 @@ public class EditBoardController {
 	private final BoardService boardservice;// 게시글 수정 시 상세조회 호출용
 
 	/**
+	 * 게시글 삭제
 	 * 
 	 * @param boardCode
 	 * @param boardNo

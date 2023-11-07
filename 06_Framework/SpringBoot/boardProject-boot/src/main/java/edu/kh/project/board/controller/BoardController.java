@@ -62,22 +62,39 @@ public class BoardController {
 	 * @param boardCode : 게시판 종류 번호
 	 * @param model : 데이터 전달용 객체
 	 * @param cp : 현재 페이지(요청 시 없으면 기본 값 1)
+	 * @param 
 	 * @return
 	 */
 	@GetMapping("{boardCode:[0-9]+}")
 	public String selectBoardList(
 			@PathVariable("boardCode") int boardCode,
 			Model model,
-			@RequestParam(value="cp" , required= false, defaultValue="1") int cp) {
-		
+			@RequestParam(value="cp" , required= false, defaultValue="1") int cp ,
+			@RequestParam Map<String , Object> paramMap){
+				
 			
+			
+			 if(paramMap.get("key") == null && paramMap.get("query")== null) {
+		
 		
 			Map<String, Object> map = service.selectBoardList(boardCode, cp);
 			
 			
 			model.addAttribute("map",map);
 			
-		
+			 }
+			 
+			 // 검색인 경우
+			 
+			 else {
+				 
+				 // boardCode를 paramMap에 추가 (한번에 묶어서 sql 전달예정)
+				 paramMap.put("boardCode", boardCode);
+				 
+				 Map <String, Object> map = service.searchBoardList(paramMap, cp);
+				 model.addAttribute("map",map);
+				 
+			 }
 		return "board/boardList";
 		
 	}
