@@ -21,7 +21,7 @@ public interface EditBoardMapper {
 	/**
 	 * 게시글 부분만 삽입
 	 * @param board
-	 * @return result
+	 * @return result 
 	 */
 	int insertBoard(Board board);
 
