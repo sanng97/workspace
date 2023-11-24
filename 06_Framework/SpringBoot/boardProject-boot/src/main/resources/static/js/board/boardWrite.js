@@ -86,13 +86,6 @@ const changeImageFn = (imageInput,order) => {
   }
 
 
-
-
-
-
-
-
-
   // 선택된 이미지 파일을 읽어와 미리보기 만들기
   
   

@@ -1,0 +1,46 @@
+*{
+  margin:0px;
+  padding: 10px;
+  text-decoration: none;
+  background-color: azure;
+  margin: auto;
+  height: 50px;
+
+}
+
+
+tbody > tr > td :first-of-type{
+  vertical-align: top;
+  font-weight: bold;
+
+}
+
+tbody > tr> td:last-of-type >input {
+  width: 300px;
+  height: 30px;
+  border-top : none;
+  border-left: none;
+  border-right :none;
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px black;
+  outline: none;
+  border: none;
+  align-items: center;
+
+
+
+}
+
+
+tbody > tr> td:last-of-type >span{
+  font-size: 12px;
+}
+
+tfoot button{
+  width: 100%;
+  margin-top:10px;
+  background-color: greenyellow;
+  border: none;
+  cursor: pointer;
+  
+}
