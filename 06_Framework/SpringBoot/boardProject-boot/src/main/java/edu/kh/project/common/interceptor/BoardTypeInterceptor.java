@@ -38,7 +38,7 @@ public class BoardTypeInterceptor implements HandlerInterceptor {
 		
 		// application scope(서버 실행시 1개만 생성 종료 시 사라짐)
 	    ServletContext application = request.getServletContext();
-		if(application.getAttribute("BoardTypeList") == null) {
+		if(application.getAttribute("boardTypeList") == null) {
 		    	
 		    
 		log.info("---BoardTypeInterceptor 동작 ---");
